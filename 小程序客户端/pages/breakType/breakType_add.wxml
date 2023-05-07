@@ -1,0 +1,22 @@
+<view class="container">
+  <loading hidden="{{loadingHide}}">
+    {{loadingText}}
+  </loading>
+  <view class="title">添加故障类型</view>
+
+  <view class="breakType_add_view">
+    <form bindsubmit="formSubmit">
+      <view class="formItem">
+        <view class="label">类型名称：</view>
+        <view class="formControl">
+          <input type="text" name="breakType.breakTypeName" placeholder="请输入类型名称" value="{{breakTypeName}}" />
+        </view>
+      </view>
+
+      <view>
+        <button class="vBtn_ok" formType="submit" disabled="{{disabled}}">提交发布</button>
+      </view>
+
+    </form>
+  </view>
+</view>

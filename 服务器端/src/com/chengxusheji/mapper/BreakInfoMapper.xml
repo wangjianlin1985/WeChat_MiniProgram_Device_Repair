@@ -1,0 +1,59 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.BreakInfoMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加故障信息记录 -->
+	<insert id="addBreakInfo" parameterType="breakInfo">
+		insert into t_breakInfo(breakTypeObj,buildingObj,breakPhoto,breakReason,studentObj,commitDate,taskStateObj,repariManObj,handResult) values 
+		(#{breakTypeObj.breakTypeId},#{buildingObj.buildingId},#{breakPhoto},#{breakReason},#{studentObj.user_name},#{commitDate},#{taskStateObj.stateId},#{repariManObj.repainManNumber},#{handResult})
+	</insert>
+
+	<!-- 按照查询条件分页查询故障信息记录 -->
+	<select id="queryBreakInfo" resultMap="breakInfoMap" >
+		select t_breakInfo.* from t_breakInfo,t_breakType,t_buildingInfo,t_repairMan,t_taskInfoState,t_userInfo ${where} and t_breakInfo.breakTypeObj = t_breakType.breakTypeId and t_breakInfo.buildingObj = t_buildingInfo.buildingId and t_breakInfo.studentObj = t_userInfo.user_name and t_breakInfo.taskStateObj = t_taskInfoState.stateId and t_breakInfo.repariManObj = t_repairMan.repainManNumber limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="breakInfoMap" type="breakInfo">
+        <id property="taskId" column="taskId" />
+        <association property="breakTypeObj" column="breakTypeObj" select="com.chengxusheji.mapper.BreakTypeMapper.getBreakType" />
+        <association property="buildingObj" column="buildingObj" select="com.chengxusheji.mapper.BuildingInfoMapper.getBuildingInfo" />
+        <association property="studentObj" column="studentObj" select="com.chengxusheji.mapper.UserInfoMapper.getUserInfo" />
+        <association property="taskStateObj" column="taskStateObj" select="com.chengxusheji.mapper.TaskInfoStateMapper.getTaskInfoState" />
+        <association property="repariManObj" column="repariManObj" select="com.chengxusheji.mapper.RepairManMapper.getRepairMan" />
+    </resultMap>
+    
+    <!-- 按照最新5条故障信息记录 -->
+	<select id="queryRecentBreakInfo" resultMap="breakInfoMap" >
+		select t_breakInfo.* from t_breakInfo,t_breakType,t_buildingInfo,t_repairMan,t_taskInfoState,t_userInfo where t_breakInfo.breakTypeObj = t_breakType.breakTypeId and t_breakInfo.buildingObj = t_buildingInfo.buildingId and t_breakInfo.studentObj = t_userInfo.user_name and t_breakInfo.taskStateObj = t_taskInfoState.stateId and t_breakInfo.repariManObj = t_repairMan.repainManNumber order by t_breakInfo.commitDate DESC limit 0,5
+	</select>
+	
+
+    <!-- 按照查询条件查询所有故障信息记录 -->
+	<select id="queryBreakInfoList" resultMap="breakInfoMap" >
+		select t_breakInfo.* from t_breakInfo,t_breakType,t_buildingInfo,t_repairMan,t_taskInfoState,t_userInfo ${where} and t_breakInfo.breakTypeObj = t_breakType.breakTypeId and t_breakInfo.buildingObj = t_buildingInfo.buildingId and t_breakInfo.studentObj = t_userInfo.user_name and t_breakInfo.taskStateObj = t_taskInfoState.stateId and t_breakInfo.repariManObj = t_repairMan.repainManNumber
+	</select>
+
+    <!-- 按照查询条件的故障信息记录数 -->
+	<select id="queryBreakInfoCount" resultType="int">
+		select count(*) from t_breakInfo,t_breakType,t_buildingInfo,t_repairMan,t_taskInfoState,t_userInfo ${where} and t_breakInfo.breakTypeObj = t_breakType.breakTypeId and t_breakInfo.buildingObj = t_buildingInfo.buildingId and t_breakInfo.studentObj = t_userInfo.user_name and t_breakInfo.taskStateObj = t_taskInfoState.stateId and t_breakInfo.repariManObj = t_repairMan.repainManNumber
+	</select>
+
+	<!-- 根据主键查询某个故障信息记录 -->
+	<select id="getBreakInfo" parameterType="int" resultMap="breakInfoMap">
+		select * from t_breakInfo where t_breakInfo.taskId = #{taskId}
+	</select>
+
+	<!-- 更新故障信息记录 -->
+	<update id="updateBreakInfo" parameterType="breakInfo">
+		update t_breakInfo set breakTypeObj=#{breakTypeObj.breakTypeId},buildingObj=#{buildingObj.buildingId},breakPhoto=#{breakPhoto},breakReason=#{breakReason},studentObj=#{studentObj.user_name},commitDate=#{commitDate},taskStateObj=#{taskStateObj.stateId},repariManObj=#{repariManObj.repainManNumber},handResult=#{handResult} where taskId = #{taskId}
+	</update>
+
+	<!-- 删除故障信息记录 -->
+	<delete id="deleteBreakInfo" parameterType="int">
+		delete from t_breakInfo where taskId=#{taskId}
+	</delete>
+
+</mapper>

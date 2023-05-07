@@ -1,0 +1,48 @@
+<view class="container">
+  <loading hidden="{{loadingHide}}">
+    {{loadingText}}
+  </loading>
+
+  <view class="title">宿舍信息详情</view>
+  <view class="buildingInfo_detail_view"> 
+      <view class="viewItem">
+        <view class="label">记录编号：</view>
+        <view class="content">
+          <view>{{buildingId}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">所在区域：</view>
+        <view class="content"> 
+          <view>{{areaObj}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">宿舍名称：</view>
+        <view class="content"> 
+          <view>{{buildingName}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">管理员：</view>
+        <view class="content"> 
+          <view>{{manageMan}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">门卫电话：</view>
+        <view class="content"> 
+          <view>{{telephone}}</view>
+        </view>
+      </view>
+
+      <view>
+        <navigator class="btnReturn" open-type="navigateBack" hover-class="navigator-hover">返回</navigator>
+      </view>
+
+  </view>
+</view>

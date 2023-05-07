@@ -1,0 +1,48 @@
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace命名空间，为了对sql语句进行隔离，方便管理，mapper开发dao方式，使用namespace有特殊作用  
+mapper代理开发时将namespace指定为mapper接口的全限定名  
+ -->
+<mapper namespace="com.chengxusheji.mapper.RepairManMapper"> 
+<!--在mapper.xml文件中配置很多的sql语句，执行每个sql语句时，封装为MappedStatement对象 
+mapper.xml以statement为单位管理sql语句  
+ -->
+	<!-- 添加维修人员记录 -->
+	<insert id="addRepairMan" parameterType="repairMan">
+		insert into t_repairMan(repainManNumber,repairManName,repairManSex,myPhoto,workYear,telephone,repairMan) values 
+		(#{repainManNumber},#{repairManName},#{repairManSex},#{myPhoto},#{workYear},#{telephone},#{repairMan})
+	</insert>
+
+	<!-- 按照查询条件分页查询维修人员记录 -->
+	<select id="queryRepairMan" resultMap="repairManMap" >
+		select t_repairMan.* from t_repairMan ${where} limit #{startIndex},#{pageSize}
+	</select>
+	<resultMap id="repairManMap" type="repairMan">
+        <id property="repainManNumber" column="repainManNumber" />
+    </resultMap>
+
+    <!-- 按照查询条件查询所有维修人员记录 -->
+	<select id="queryRepairManList" resultMap="repairManMap" >
+		select t_repairMan.* from t_repairMan ${where}
+	</select>
+
+    <!-- 按照查询条件的维修人员记录数 -->
+	<select id="queryRepairManCount" resultType="int">
+		select count(*) from t_repairMan ${where}
+	</select>
+
+	<!-- 根据主键查询某个维修人员记录 -->
+	<select id="getRepairMan" parameterType="string" resultMap="repairManMap">
+		select * from t_repairMan where t_repairMan.repainManNumber = #{repainManNumber}
+	</select>
+
+	<!-- 更新维修人员记录 -->
+	<update id="updateRepairMan" parameterType="repairMan">
+		update t_repairMan set repairManName=#{repairManName},repairManSex=#{repairManSex},myPhoto=#{myPhoto},workYear=#{workYear},telephone=#{telephone},repairMan=#{repairMan} where repainManNumber = #{repainManNumber}
+	</update>
+
+	<!-- 删除维修人员记录 -->
+	<delete id="deleteRepairMan" parameterType="string">
+		delete from t_repairMan where repainManNumber=#{repainManNumber}
+	</delete>
+
+</mapper>

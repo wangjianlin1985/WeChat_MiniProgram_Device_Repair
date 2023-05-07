@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<view class="container">
+   <swiper indicator-dots="true" autoplay="true" interval="{{interval}}" duration="{{duration}}" circular="true">
+        <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+            <swiper-item>
+                <image src="{{item}}" class="slide-image" width="100%"/>
+            </swiper-item>
+        </block>
+    </swiper>
+  
+  <!--
+  <view class="userinfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view> -->
+
+ <view class="title">最新报修信息</view> 
+ <view class="breakInfoList">
+  <block wx:for-items="{{breakInfos}}" wx:key="{{index}}">
+    <view class="breakInfoItem">
+        <view class="breakInfoImg">
+          <image src="{{item.breakPhotoUrl}}"></image>
+        </view>
+        <navigator url="breakInfo_detail?taskId={{item.taskId}}" hover-class="navigator-hover">
+        <view class="breakInfoText"> 
+          <view>故障类型：{{item.breakTypeObj.breakTypeName}}</view>
+          <view>所在宿舍：{{item.buildingObj.buildingName}}</view>
+          <view>故障信息：{{item.breakReason}}</view>
+          <view>任务状态：{{item.taskStateObj.stateName}}</view>
+          <view>报修时间：{{item.commitDate}}</view>
+        </view>
+        </navigator>
+    </view>
+    
+  </block>
+  </view>
+
+
+  <view hidden="{{loading_hide}}" class="loading">
+    <view class="loadingImg"><image src="/images/loading.gif" mode="aspectFill"></image></view>
+    <view class="loadingTxt">..加载中..</view>
+  </view>
+
+</view>

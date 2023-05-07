@@ -1,0 +1,59 @@
+<view class="container">
+  <view class="toggleQview" bindtap="toggleQueryViewHide" style="padding:5px;">显示或隐藏查询视图</view>
+  <view class="queryView" hidden="{{queryViewHidden}}">
+    <view class="queryParams">
+      <view class="queryItem">
+        <view class="label">所在区域：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_areaObj_change" value="{{areaObj_Index}}" range-key="areaName" range="{{areaInfos}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{areaInfos[areaObj_Index].areaName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">宿舍名称：</view>
+        <view class="searchControl"><input data-id="buildingName" placeholder="请输入宿舍名称关键字" value="{{buildingName}}" bindinput="searchValueInput" /></view>
+      </view>
+
+    </view>
+
+    <view class="queryButton">
+       <button class="font_12 fl_r op-btn mr_10" bindtap="queryBuildingInfo">查询</button>
+    </view>
+  </view>
+
+  <view class="buildingInfoList">
+  <block wx:for-items="{{buildingInfos}}" wx:key="{{index}}">
+    <view class="buildingInfoItem">
+        <navigator url="buildingInfo_detail?buildingId={{item.buildingId}}" hover-class="navigator-hover">
+        <view class="buildingInfoText">
+          <view>记录编号：{{item.buildingId}}</view>
+          <view>所在区域：{{item.areaObj.areaName}}</view>
+          <view>宿舍名称：{{item.buildingName}}</view>
+          <view>管理员：{{item.manageMan}}</view>
+          <view>门卫电话：{{item.telephone}}</view>
+        </view>
+        </navigator>
+    </view>
+    <view class="opt_view" style="display:none;">
+      <button class="font_12 fl_r del-btn mr_10" bindtap="removeBuildingInfo" data-buildingid="{{item.buildingId}}">删除</button> 
+      <navigator url="buildingInfo_modify?buildingId={{item.buildingId}}" hover-class="navigator-hover">
+        <button class="font_12 fl_r op-btn mr_10">编辑</button>
+      </navigator>
+    </view>
+  </block>
+  </view>
+
+  <view hidden="{{loading_hide}}" class="loading">
+    <view class="loadingImg"><image src="/images/loading.gif" mode="aspectFill"></image></view>
+    <view class="loadingTxt">..加载中..</view>
+  </view>
+  <view class="nodata_view" hidden="{{nodata_hide}}">
+    <image src="/images/Noline.png" mode="widthFix"></image>
+  </view>
+</view>
+

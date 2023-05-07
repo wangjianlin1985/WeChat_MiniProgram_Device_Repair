@@ -1,0 +1,62 @@
+<view class="container">
+  <loading hidden="{{loadingHide}}">
+    {{loadingText}}
+  </loading>
+
+  <view class="title">维修人员详情</view>
+  <view class="repairMan_detail_view"> 
+      <view class="viewItem">
+        <view class="label">人员编号：</view>
+        <view class="content">
+          <view>{{repainManNumber}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">人员姓名：</view>
+        <view class="content"> 
+          <view>{{repairManName}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">性别：</view>
+        <view class="content"> 
+          <view>{{repairManSex}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">个人头像：</view>
+        <view class="content"> 
+          <image mode="aspectFill" src="{{myPhotoUrl}}"></image>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">工作年限：</view>
+        <view class="content"> 
+          <view>{{workYear}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">联系电话：</view>
+        <view class="content"> 
+          <view>{{telephone}}</view>
+        </view>
+      </view>
+
+       <view class="viewItem">
+        <view class="label">维修人员介绍：</view>
+        <view class="content"> 
+          <view>{{repairMan}}</view>
+        </view>
+      </view>
+
+      <view>
+        <navigator class="btnReturn" open-type="navigateBack" hover-class="navigator-hover">返回</navigator>
+      </view>
+
+  </view>
+</view>

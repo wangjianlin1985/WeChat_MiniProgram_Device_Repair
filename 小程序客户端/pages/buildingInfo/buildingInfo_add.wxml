@@ -1,0 +1,49 @@
+<view class="container">
+  <loading hidden="{{loadingHide}}">
+    {{loadingText}}
+  </loading>
+  <view class="title">添加宿舍信息</view>
+
+  <view class="buildingInfo_add_view">
+    <form bindsubmit="formSubmit">
+      <view class="formItem">
+        <view class="label">所在区域：</view>
+        <view class="formControl">
+          <picker bindchange="bind_areaObj_change" value="{{areaObj_Index}}" range-key="areaName" range="{{areaInfos}}">
+            <view style="display:flex;border:1px solid green;">
+              <input hidden="true" name="buildingInfo.areaObj.areaId" value="{{areaInfos[areaObj_Index].areaId}}" />
+              <input style="width:90%;border:0px;" value="{{areaInfos[areaObj_Index].areaName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">宿舍名称：</view>
+        <view class="formControl">
+          <input type="text" name="buildingInfo.buildingName" placeholder="请输入宿舍名称" value="{{buildingName}}" />
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">管理员：</view>
+        <view class="formControl">
+          <input type="text" name="buildingInfo.manageMan" placeholder="请输入管理员" value="{{manageMan}}" />
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">门卫电话：</view>
+        <view class="formControl">
+          <input type="text" name="buildingInfo.telephone" placeholder="请输入门卫电话" value="{{telephone}}" />
+        </view>
+      </view>
+
+      <view>
+        <button class="vBtn_ok" formType="submit" disabled="{{disabled}}">提交发布</button>
+      </view>
+
+    </form>
+  </view>
+</view>

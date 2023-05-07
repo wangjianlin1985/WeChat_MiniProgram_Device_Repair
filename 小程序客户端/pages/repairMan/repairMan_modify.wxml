@@ -1,0 +1,65 @@
+<view class="container">
+  <loading hidden="{{loadingHide}}">
+    {{loadingText}}
+  </loading>
+  <view class="title">编辑维修人员</view>
+
+  <view class="repairMan_modify_view">
+    <form bindsubmit="formSubmit">
+       <view class="formItem">
+        <view class="label">人员编号：</view>
+        <view class="formControl">
+          <input type="text" name="repairMan.repainManNumber" disabled="true" value="{{repainManNumber}}" />
+        </view>
+      </view>
+      <view class="formItem">
+        <view class="label">人员姓名：</view>
+        <view class="formControl">
+          <input type="text" name="repairMan.repairManName" placeholder="请输入人员姓名" value="{{repairManName}}" />
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">性别：</view>
+        <view class="formControl">
+          <input type="text" name="repairMan.repairManSex" placeholder="请输入性别" value="{{repairManSex}}" />
+        </view>
+      </view>
+
+       <view class="formItem">
+        <view class="label">个人头像：</view>
+        <view class="formControl" bindtap="select_myPhoto">
+          <input type="text" hidden="true" name="repairMan.myPhoto" value="{{myPhoto}}" />
+          <image class="uploadPic" mode="aspectFill" src="{{myPhotoUrl}}"></image>
+          <image wx:for="{{myPhotoList}}" class="uploadPic" mode="aspectFill" src="{{item}}" wx:key=""></image>
+          <image src="../../images/upic.png" class="uploadPic" mode="widthFix"></image>
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">工作年限：</view>
+        <view class="formControl">
+          <input type="text" name="repairMan.workYear" placeholder="请输入工作年限" value="{{workYear}}" />
+        </view>
+      </view>
+
+      <view class="formItem">
+        <view class="label">联系电话：</view>
+        <view class="formControl">
+          <input type="text" name="repairMan.telephone" placeholder="请输入联系电话" value="{{telephone}}" />
+        </view>
+      </view>
+
+      <view class="formItem" style="align-items:flex-start;">
+        <view class="label">维修人员介绍：</view>
+        <view class="formControl">
+           <textarea placeholder="请输入维修人员介绍" maxlength="800" name="repairMan.repairMan" value="{{repairMan}}" />
+        </view>
+      </view>
+
+      <view>
+        <button class="vBtn_ok" formType="submit" disabled="{{disabled}}">提交修改</button>
+      </view>
+    </form>
+  </view>
+</view>

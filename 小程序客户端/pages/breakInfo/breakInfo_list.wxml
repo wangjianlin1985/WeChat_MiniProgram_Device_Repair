@@ -1,0 +1,124 @@
+<view class="container">
+  <view class="toggleQview" bindtap="toggleQueryViewHide" style="padding:5px;">显示或隐藏查询视图</view>
+  <view class="queryView" hidden="{{queryViewHidden}}">
+    <view class="queryParams">
+      <view class="queryItem">
+        <view class="label">任务状态：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_taskStateObj_change" value="{{taskStateObj_Index}}" range-key="stateName" range="{{taskInfoStates}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{taskInfoStates[taskStateObj_Index].stateName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">维修人员：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_repariManObj_change" value="{{repariManObj_Index}}" range-key="repairManName" range="{{repairMans}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{repairMans[repariManObj_Index].repairManName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">故障类型：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_breakTypeObj_change" value="{{breakTypeObj_Index}}" range-key="breakTypeName" range="{{breakTypes}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{breakTypes[breakTypeObj_Index].breakTypeName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">所在宿舍：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_buildingObj_change" value="{{buildingObj_Index}}" range-key="buildingName" range="{{buildingInfos}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{buildingInfos[buildingObj_Index].buildingName}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">故障信息：</view>
+        <view class="searchControl"><input data-id="breakReason" placeholder="请输入故障信息关键字" value="{{breakReason}}" bindinput="searchValueInput" /></view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">申报学生：</view>
+        <view class="searchControl">
+          <picker bindchange="bind_studentObj_change" value="{{studentObj_Index}}" range-key="name" range="{{userInfos}}">
+            <view class="value" name="types">
+              <input style="width:75%;display:inline-block;float:left;" value="{{userInfos[studentObj_Index].name}}"></input>
+              <image class="arrow-r" src="/images/arrow-r-0.png"></image>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+      <view class="queryItem">
+        <view class="label">报修时间：</view>
+         <view class="searchControl">
+          <picker mode="date" value="{{commitDate}}" start="1970-01-01" end="2030-01-01" bindchange="bind_commitDate_change" >
+            <view>
+              <input style="width:75%;display:inline-block;float:left;" placeholder="选择报修时间" value="{{commitDate}}"></input>
+              <text class="clearButton" catchtap="clear_commitDate">x</text>
+            </view>
+          </picker> 
+        </view>
+      </view>
+
+    </view>
+
+    <view class="queryButton">
+       <button class="font_12 fl_r op-btn mr_10" bindtap="queryBreakInfo">查询</button>
+    </view>
+  </view>
+
+  <view class="breakInfoList">
+  <block wx:for-items="{{breakInfos}}" wx:key="{{index}}">
+    <view class="breakInfoItem">
+        <view class="breakInfoImg">
+          <image src="{{item.breakPhotoUrl}}"></image>
+        </view>
+        <navigator url="breakInfo_detail?taskId={{item.taskId}}" hover-class="navigator-hover">
+        <view class="breakInfoText">
+          <view>任务状态：{{item.taskStateObj.stateName}}</view>
+          <view>任务编号：{{item.taskId}}</view>
+          <view>故障类型：{{item.breakTypeObj.breakTypeName}}</view>
+          <view>所在宿舍：{{item.buildingObj.buildingName}}</view>
+          <view>故障信息：{{item.breakReason}}</view>
+          <view>申报学生：{{item.studentObj.name}}</view>
+          <view>报修时间：{{item.commitDate}}</view>
+        </view>
+        </navigator>
+    </view>
+    <view class="opt_view" style="display:none;">
+      <button class="font_12 fl_r del-btn mr_10" bindtap="removeBreakInfo" data-taskid="{{item.taskId}}">删除</button> 
+      <navigator url="breakInfo_modify?taskId={{item.taskId}}" hover-class="navigator-hover">
+        <button class="font_12 fl_r op-btn mr_10">编辑</button>
+      </navigator>
+    </view>
+  </block>
+  </view>
+
+  <view hidden="{{loading_hide}}" class="loading">
+    <view class="loadingImg"><image src="/images/loading.gif" mode="aspectFill"></image></view>
+    <view class="loadingTxt">..加载中..</view>
+  </view>
+  <view class="nodata_view" hidden="{{nodata_hide}}">
+    <image src="/images/Noline.png" mode="widthFix"></image>
+  </view>
+</view>
+
